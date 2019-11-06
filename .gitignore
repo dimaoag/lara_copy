@@ -1,0 +1,16 @@
+Vagrantfile
+provision.sh
+ubuntu-xenial-16.04-cloudimg-console.log
+/node_modules
+/public/build
+/public/storage
+/storage/*.key
+/vendor
+/.idea
+/.vscode
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.env

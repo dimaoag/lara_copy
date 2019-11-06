@@ -1,0 +1,112 @@
+php artisan make:controller Auth\\UsersController --resource
+php artisan make:mail VerifyMail
+
+php artisan make:migration add_column_for_table --table=users
+php artisan migrate
+
+composer dump-autoload -o //before seeds and factories
+php artisan make:seeder UsersTableSeeder
+php artisan db:seed
+php artisan db:seed --class=UsersTableSeeder
+
+php artisan make:command User/VerifyCommand
+php artisan user:verify dimaoag@gmail.com
+php artisan user:role dimaoag@gmail.com admin
+
+yarn add -s font-awesome
+yarn add -s --dev font-awesome
+yarn run watch
+yarn run dev
+
+//tests
+php vendor/bin/phpunit
+
+curl -X GET 'http://localhost:9200'
+curl -X GET 'http://localhost:9200/adverts/_search?pretty=true'
+php artisan search:init
+php artisan search:reindex
+
+// storage
+php artisan storage:link //ln -s /storage/app/public  --> /public
+
+
+//Networks
+Socialite Providers github io
+
+//Api
+/register {"name": "Test", "email": "dimaoa@mail.ru", "password": "123456", "password_confirmation": "123456"}
+
+// Passport
+1. AppServiceProvider -> register() add Passport::ignoreMigrations();
+2. php artisan vendor:publish --tag=passport-migrations
+3. php artisan migrate
+4. php artisan passport:install
+5. Entity add Trait HasApiTokens and
+
+public function findForPassport($identifier)
+{
+	return self::where('email', $identifier)->where('status', self::STATUS_ACTIVE)->first();
+}
+
+6. AuthServiceProvider -> boot() add Passport::routes();
+7. config -> auth.php add api driver 'passport'
+
+http://lara.com/oauth/token -\
+
+{
+	"grant_type": "password",
+	"client_id": "2",
+	"client_secret": "wBgtUMonBdOUxV0YvAlsZM8H2wsCGxh3UmhHO53A",
+	"username": "dimaoag@gmail.com",
+	"password": "123456",
+	"scope": ""
+}
+
+response
+
+{
+	"token_type": "Bearer",
+	"expires_in": 31622399,
+	"access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjM3ZGM1NDA4OGVhNGU2MGU2ZTAxZWE5ZWFhNTc3YWYwNWJjZTUwMTk2MDM1NTZhZDA3YTNiY2U3NTQ2YThmZGZlODE0YjZiNTEwYWFiNGNlIn0.eyJhdWQiOiIyIiwianRpIjoiMzdkYzU0MDg4ZWE0ZTYwZTZlMDFlYTllYWE1NzdhZjA1YmNlNTAxOTYwMzU1NmFkMDdhM2JjZTc1NDZhOGZkZmU4MTRiNmI1MTBhYWI0Y2UiLCJpYXQiOjE1NjU4OTc4NjAsIm5iZiI6MTU2NTg5Nzg2MCwiZXhwIjoxNTk3NTIwMjYwLCJzdWIiOiIxMSIsInNjb3BlcyI6W119.KF7XmomXYVUhVaVinQUbx5lSena5IpBLsK2cjN_KTUX57nNIXh-A6RJPNS_10HK19n4Q1XfkC7d2o5_sJPufUNEimiCu9yjTDm6J0aq2iVidShK3_mHLnjU2k2JRxhg0lFJqqs_e32EdDdi24yFrCKZtOIE_aGwqnceJ2lLrr-C2iuJ4pxjukBTzULpYDSr7TaQQs9iFlYcw4pGGjMO9RyHZj68dbzW36WkvMVsmk43-7tJsiyuqd1m26v4DUixMBRxYk6UoXmLWANkATbbi67PY3XHWUAzhrRVIDK6H_93KemRykkFWMlnUEEmvGhzPoF612GQlST1QaIDRWdumciG9ozo6hRgbbHXb2ouCCVuVZq5uNZiGCImMLA94TBgstur6XCPuHZ0iWKQ-CWRP_TzKViOA5QAFDmlVrHV9ieK626sXKpDK_vedcLrNOPcSfcvPSrZliGGm2oY7v3QudpUshrApbhassxR2He1Uh7qI-QDdy_KrTOBV9UNdwXYwTMM__vfor2GbDP1m7EvlyVB9q-XTm1PfRgrhXfWD54mcx9JVDbC1jNL8RxPTO2awjtDgDWuRqLdEaghlBMgBc7LaFlBkqb5vZTC1KW33XM-P46UsaL6wzIekrIJ0H49phfMwJJXOXHCIvDlGv_y5O-BgYrPXi-HVzrbCUM9TC1Q",
+	"refresh_token":"def50200642e3224a64ef1ad413a63450d74c4a58e2ef5b291f81d86e8656069e22f2d787d411f60b37f45d7a816aa7fe80d53a3b2fce4e7fd5205af68965d825ae47b5fc5b6a4c9c993fd0acf324c91ffd5679c829afb0b29939107ef043ae4f1c54c589c1fce6ca8cbdef31bf375a9525a2eaecc188015e0693e1bbbc4e8748de50a8ba8d5099f706500e4f5bbdb919b6bf768b68a4fdf7e2e05bb62193690c49f597e3e29ff7c487860818137b23f7ddb79f3ae1b08b8d5e2b533b537be421f804a6ff0c61e1286eb80ccf7a3513a16b78b259b16287c593894305f659caefa14cb712ed6d0219813457b18613a65aa1228852172a61761940084c16072b70f20e7761f3b86331fc0dc0be349b221cc83173dbbe4b1e98367412fe11b7bc0a539889dc6eb0b3ff8413ff1fd408202a59862ca75b4259c8f0d6d45dd7e665bd3abe6684eabcd9f9c8e07f446ded124efd1f71845ab78c885e9f559c5edc82030e1"
+}
+
+
+// Resources
+php artisan make:resource User/ProfileResource
+
+// Swagger
+vendor/bin/swagger --help
+vendor/bin/swagger -o public/docs/swagger.json app/Http
+php artisan api:doc
+
+setting nginx
+http://lara.com/docs/index.html
+
+// HtmlPurifier
+php artisan vendor:publish --provider="Mews\Purifier\PurifierServiceProvider"
+
+// summernote text editor
+yarn add -s --dev summernote
+
+// notifications
+php artisan make:notification Advert/ModerationPassedNotification
+
+// queue
+php artisan queue:work  //виполнить and work continue queue
+php artisan queue:work --once  //work and stop
+php artisan queue:listen  //слушать и выполнять queue
+
+// events
+php artisan make:event Advert/ModerationPassed
+
+// listeners
+php artisan make:listener Advert/ModerationPassedListener
+
+// jobs
+php artisan make:job Advert/ReindexAdvert
+
+ReindexAdvert::dispatch($event->advert);
+
+// horizon
+php artisan vendor:publish --provider="Laravel\Horizon\HorizonServiceProvider"
